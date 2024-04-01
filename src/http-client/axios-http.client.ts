@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/space-before-function-paren */
 import { type Axios } from "axios";
-import { HttpClient } from "./http-client";
+import { HttpClient } from "./http-client.js";
 
 export class AxiosHttpClient extends HttpClient {
   private readonly baseUrl: string;
 
   constructor(private readonly client: Axios) {
     super();
-    this.baseUrl = "http://localhost:3000";
+    this.baseUrl = "http://localhost:4000";
   }
 
   async post<ResponseType>(url: string, body: unknown): Promise<ResponseType> {
@@ -36,7 +36,7 @@ export class AxiosHttpClient extends HttpClient {
     path: string;
     query?: Record<string, string>;
   }): string {
-    const url = new URL(`${this.baseUrl}/${path}`);
+    const url = new URL(`${this.baseUrl}${path}`);
 
     const urlParams = new URLSearchParams(query);
     url.search = urlParams.toString();
