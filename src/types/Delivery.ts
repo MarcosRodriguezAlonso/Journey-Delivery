@@ -1,8 +1,8 @@
 import { UUID } from "crypto";
 
 export type Urls = {
-  front: string;
-  back: string;
+  gitHub: string;
+  production: string;
 };
 
 export type Delivery = {
