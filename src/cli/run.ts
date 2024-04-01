@@ -18,6 +18,12 @@ export const run = async () => {
 
   if (answers.action === "Delete") {
     const deleteAnswers = await prompt(deleteQuestions);
+
+    if (!deleteAnswers["confirm delete"]) {
+      console.log("Delete delivery cancelled");
+      return;
+    }
+
     console.log("Deleting delivery starts...");
 
     try {
