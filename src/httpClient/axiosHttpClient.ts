@@ -1,5 +1,5 @@
 import { type Axios } from "axios";
-import { HttpClient } from "./http-client.js";
+import { HttpClient } from "./httpClient.js";
 
 export class AxiosHttpClient extends HttpClient {
   constructor(private readonly client: Axios) {
