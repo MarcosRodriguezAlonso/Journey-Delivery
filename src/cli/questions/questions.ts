@@ -1,7 +1,6 @@
-import inquirer, { Question, QuestionCollection } from "inquirer";
+import { QuestionCollection } from "inquirer";
 
-const prompt = inquirer.createPromptModule();
-const questions: QuestionCollection = [
+export const questions: QuestionCollection = [
   {
     type: "list",
     name: "name",
@@ -22,7 +21,7 @@ const questions: QuestionCollection = [
   },
 ];
 
-const deleteQuestions = [
+export const deleteQuestions = [
   {
     type: "confirm",
     name: "confirm delete",
@@ -30,24 +29,10 @@ const deleteQuestions = [
   },
 ];
 
-const createQuestions = [
+export const createQuestions = [
   {
     type: "confirm",
     name: "partner",
     message: "Is with a partner?",
   },
 ];
-
-const answers = await prompt(questions);
-
-if (answers.action === "Create") {
-  const createAnswers = await prompt(createQuestions);
-  console.log("Creating delivery...");
-  console.log(createAnswers);
-}
-
-if (answers.action === "Delete") {
-  const deleteAnswers = await prompt(deleteQuestions);
-  console.log("Deleting delivery...");
-  console.log(deleteAnswers);
-}
