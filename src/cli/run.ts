@@ -1,9 +1,5 @@
 import inquirer from "inquirer";
-import {
-  numberOfPartnersQuestion,
-  deleteQuestions,
-  questions,
-} from "./questions/questions.js";
+import { questions } from "./questions/questions.js";
 import { createDelivery, deleteDelivery } from "../deliveryService/requests.js";
 import { DeliveryCreateDto } from "../types/Delivery.js";
 
