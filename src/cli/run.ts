@@ -1,7 +1,12 @@
 import inquirer from "inquirer";
 import { questions } from "./questions/questions.js";
-import { createDelivery, deleteDelivery } from "../deliveryService/requests.js";
-import { DeliveryCreateDto } from "../types/Delivery.js";
+import {
+  createDelivery,
+  deleteDelivery,
+  getDeliveries,
+} from "../deliveryService/requests.js";
+import { Delivery, DeliveryCreateDto } from "../types/Delivery.js";
+import groupBy from "./groupBy/groupBy.js";
 
 export const run = async () => {
   const prompt = inquirer.createPromptModule();
@@ -50,6 +55,62 @@ export const run = async () => {
       console.log("Successfull deliver it...");
     } catch (error) {
       console.error(`Failed to create delivery. Error: ${error.message}`);
+    }
+  }
+
+  if (answers["action"] === "read") {
+    try {
+      const deliveries: Delivery[] = await getDeliveries();
+
+      const printDeliveryInfo = (delivery: Delivery) => {
+        const hasTeammates =
+          delivery.firstTeammateName || delivery.secondTeammateName;
+        const hasFront = delivery.frontRepoUrl || delivery.frontProductionUrl;
+        const hasBack = delivery.backRepoUrl || delivery.backProductionUrl;
+
+        if (!hasFront && !hasBack) {
+          return;
+        }
+
+        console.log(`\n  Owner ${delivery.owner}:`);
+
+        if (hasFront) {
+          console.log(`    Repo Front: ${delivery.frontRepoUrl}`);
+          console.log(`    Production Front: ${delivery.frontProductionUrl}`);
+        }
+
+        if (hasBack) {
+          console.log(`    Repo Back: ${delivery.backRepoUrl}`);
+          console.log(`    Production Back: ${delivery.backProductionUrl}`);
+        }
+
+        if (hasTeammates) {
+          console.log(
+            `    Team: ${delivery.firstTeammateName}${hasTeammates ? "," : "."} ${delivery.secondTeammateName}`,
+          );
+        }
+      };
+
+      const printOwnerDeliveries = ([owner, deliveriesByOwner]: [
+        string,
+        Delivery[],
+      ]) => {
+        deliveriesByOwner.forEach(printDeliveryInfo);
+      };
+
+      const printWeekDeliveries = ([week, deliveriesInWeek]: [
+        string,
+        Delivery[],
+      ]) => {
+        console.log(`Week ${week}:`);
+        const groupedByOwner = groupBy(deliveriesInWeek, "owner");
+        Object.entries(groupedByOwner).forEach(printOwnerDeliveries);
+      };
+
+      const groupedByWeek = groupBy(deliveries, "week");
+      Object.entries(groupedByWeek).forEach(printWeekDeliveries);
+    } catch (error) {
+      console.error(`Failed to read deliveries. Error: ${error.message}`);
     }
   }
 };

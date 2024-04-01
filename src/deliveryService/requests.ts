@@ -1,6 +1,10 @@
 import axios from "axios";
 import { AxiosHttpClient } from "../httpClient/axiosHttpClient.js";
-import { DeliveryCreateDto, DeliveryDeleteDto } from "../types/Delivery.js";
+import {
+  Delivery,
+  DeliveryCreateDto,
+  DeliveryDeleteDto,
+} from "../types/Delivery.js";
 import buildUrl from "../httpClient/buildUrl/buildUrl.js";
 import { baseUrl } from "../config/apiPaths/apiPaths.js";
 
@@ -8,7 +12,11 @@ const axiosHttpClient = new AxiosHttpClient(axios.create());
 const deliveriesUrl = buildUrl(baseUrl, "/deliveries");
 
 export const getDeliveries = async () => {
-  return await axiosHttpClient.get(deliveriesUrl);
+  const response = (await axiosHttpClient.get(deliveriesUrl)) as {
+    deliveries: Delivery[];
+  };
+
+  return response.deliveries;
 };
 
 export const createDelivery = async (deliveryCreateDto: DeliveryCreateDto) => {

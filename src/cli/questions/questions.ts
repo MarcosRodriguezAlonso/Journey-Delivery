@@ -1,7 +1,7 @@
 import { QuestionCollection } from "inquirer";
 
 const studentChoices = ["Clara", "Marcos", "Eric"];
-const actions = ["create", "delete"] as const;
+const actions = ["create", "delete", "read"] as const;
 export type Action = (typeof actions)[number];
 
 export const questions: QuestionCollection = [
