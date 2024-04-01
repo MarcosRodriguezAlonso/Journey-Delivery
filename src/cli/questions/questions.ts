@@ -31,26 +31,26 @@ export const questions: QuestionCollection = [
   },
   {
     type: "list",
-    name: "numberOfMembers",
+    name: "numberOfTeammates",
     message: "How many team members are working with you?",
     choices: [0, 1, 2],
     when: (answers: { action: Action }) => answers.action === "create",
   },
   {
     type: "list",
-    name: "firstMembersName",
-    message: "What's the name of your first partner?",
+    name: "firstTeammateName",
+    message: "What's the name of your first teammate?",
     choices: studentChoices,
-    when: (answers: { numberOfPartners: number }) =>
-      answers.numberOfPartners > 0,
+    when: (answers: { numberOfTeammates: number }) =>
+      answers.numberOfTeammates > 0,
   },
   {
     type: "list",
-    name: "secondMembersName",
-    message: "What's the name of your second partner?",
+    name: "secondTeammateName",
+    message: "What's the name of your second teammate?",
     choices: studentChoices,
-    when: (answers: { numberOfPartners: number }) =>
-      answers.numberOfPartners > 1,
+    when: (answers: { numberOfTeammates: number }) =>
+      answers.numberOfTeammates > 1,
   },
   {
     type: "confirm",

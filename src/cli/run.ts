@@ -37,18 +37,12 @@ export const run = async () => {
     const deliverToCreate: DeliveryCreateDto = {
       owner: answers.name,
       week: answers.week,
-      hasPartner: answers.numberOfPartners > 1,
-      frontUrls: {
-        gitHub: answers.repoFrontUrl,
-        production: answers.prodFrontUrl,
-      },
-      backUrls: {
-        gitHub: answers.repoBackUrl,
-        production: answers.prodBackUrl,
-      },
-      firstPartnerName: answers.firstPartnerName,
-      secondPartnerName: answers.secondPartnerName,
-      deliveryDate: new Date(),
+      frontProductionUrl: answers.frontProductionUrl,
+      frontRepoUrl: answers.frontRepoUrl,
+      backProductionUrl: answers.backProductionUrl,
+      backRepoUrl: answers.backRepoUrl,
+      firstTeammateName: answers.firstPartnerName,
+      secondTeammateName: answers.secondPartnerName,
     };
 
     try {

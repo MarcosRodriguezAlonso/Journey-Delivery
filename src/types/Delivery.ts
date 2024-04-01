@@ -1,22 +1,16 @@
-import { UUID } from "crypto";
-
-export type Urls = {
-  gitHub: string;
-  production: string;
-};
-
 export type Delivery = {
-  id: UUID;
+  id: number;
   owner: string;
   week: number;
-  hasPartner: boolean;
-  firstPartnerName?: string;
-  secondPartnerName?: string;
-  deliveryDate: Date;
-  frontUrls?: Urls;
-  backUrls?: Urls;
+  firstTeammateName?: string;
+  secondTeammateName?: string;
+  frontRepoUrl?: string;
+  frontProductionUrl?: string;
+  backRepoUrl?: string;
+  backProductionUrl?: string;
+  createdAt: Date;
 };
 
-export type DeliveryCreateDto = Omit<Delivery, "id">;
+export type DeliveryCreateDto = Omit<Delivery, "id" | "createdAt">;
 
 export type DeliveryDeleteDto = Pick<Delivery, "owner" | "week">;
