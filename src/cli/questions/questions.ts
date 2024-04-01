@@ -60,13 +60,13 @@ export const questions: QuestionCollection = [
   },
   {
     type: "input",
-    name: "repoFrontUrl",
+    name: "frontRepoUrl",
     message: "What's the repo URL?",
     when: (answers: { hasFront: boolean }) => answers.hasFront,
   },
   {
     type: "input",
-    name: "prodFrontUrl",
+    name: "frontProductionUrl",
     message: "What's the production URL?",
     when: (answers: { hasFront: boolean }) => answers.hasFront,
   },
@@ -78,13 +78,13 @@ export const questions: QuestionCollection = [
   },
   {
     type: "input",
-    name: "repoBackUrl",
+    name: "backRepoUrl",
     message: "What's the repo URL?",
     when: (answers: { hasBack: boolean }) => answers.hasBack,
   },
   {
     type: "input",
-    name: "prodBackUrl",
+    name: "backProductionUrl",
     message: "What's the production URL?",
     when: (answers: { hasBack: boolean }) => answers.hasBack,
   },

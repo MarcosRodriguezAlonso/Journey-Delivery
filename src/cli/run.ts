@@ -7,6 +7,7 @@ import {
 } from "../deliveryService/requests.js";
 import { Delivery, DeliveryCreateDto } from "../types/Delivery.js";
 import groupBy from "./groupBy/groupBy.js";
+import chalk from "chalk";
 
 export const run = async () => {
   const prompt = inquirer.createPromptModule();
@@ -14,7 +15,7 @@ export const run = async () => {
   const answers = await prompt(questions);
 
   if (answers["action"] === "delete" && !answers["confirmDelete"]) {
-    console.log("Delete delivery cancelled");
+    console.log(chalk.bold("Delete delivery cancelled"));
     return;
   }
 
@@ -27,14 +28,16 @@ export const run = async () => {
         week: answers.week,
       });
 
-      console.log("Delivery deleted successfully");
+      console.log(chalk.bgGreen("Delivery deleted successfully"));
     } catch (error) {
-      console.error(`Failed to delete delivery. Error: ${error.message}`);
+      console.error(
+        chalk.bgRed(`Failed to delete delivery. Error: ${error.message}`),
+      );
     }
   }
 
   if (answers["action"] === "create" && !answers["confirmCreate"]) {
-    console.log("Create delivery cancelled");
+    console.log(chalk.bgGreen("Create delivery cancelled"));
     return;
   }
 
@@ -52,9 +55,11 @@ export const run = async () => {
 
     try {
       await createDelivery(deliverToCreate);
-      console.log("Successfull deliver it...");
+      console.log(chalk.bgGreen("Successfull deliver it..."));
     } catch (error) {
-      console.error(`Failed to create delivery. Error: ${error.message}`);
+      console.error(
+        chalk.bgRed(`Failed to create delivery. Error: ${error.message}`),
+      );
     }
   }
 
@@ -72,21 +77,33 @@ export const run = async () => {
           return;
         }
 
-        console.log(`\n  Owner ${delivery.owner}:`);
+        console.log(chalk.bgBlue(`\n  Owner ${delivery.owner}:`));
 
         if (hasFront) {
-          console.log(`    Repo Front: ${delivery.frontRepoUrl}`);
-          console.log(`    Production Front: ${delivery.frontProductionUrl}`);
+          console.log(
+            chalk.bold(`    Repo Front: `) + `${delivery.frontRepoUrl}`,
+          );
+          console.log(
+            chalk.bold(`    Production Front: `) +
+              `${delivery.frontProductionUrl}`,
+          );
         }
 
         if (hasBack) {
-          console.log(`    Repo Back: ${delivery.backRepoUrl}`);
-          console.log(`    Production Back: ${delivery.backProductionUrl}`);
+          console.log(
+            chalk.bold(`    Repo Back: `) + `${delivery.backRepoUrl}`,
+          );
+          console.log(
+            chalk.bold(`    Production Back: `) +
+              `${delivery.backProductionUrl}`,
+          );
         }
 
         if (hasTeammates) {
           console.log(
-            `    Team: ${delivery.firstTeammateName}${hasTeammates ? "," : "."} ${delivery.secondTeammateName}`,
+            chalk.bold.yellowBright(
+              `    Team: ${delivery.firstTeammateName}${hasTeammates ? " & " : "."}${delivery.secondTeammateName}`,
+            ),
           );
         }
       };
@@ -102,7 +119,7 @@ export const run = async () => {
         string,
         Delivery[],
       ]) => {
-        console.log(`Week ${week}:`);
+        console.log(chalk.greenBright(`Week ${week}:`));
         const groupedByOwner = groupBy(deliveriesInWeek, "owner");
         Object.entries(groupedByOwner).forEach(printOwnerDeliveries);
       };
@@ -110,7 +127,9 @@ export const run = async () => {
       const groupedByWeek = groupBy(deliveries, "week");
       Object.entries(groupedByWeek).forEach(printWeekDeliveries);
     } catch (error) {
-      console.error(`Failed to read deliveries. Error: ${error.message}`);
+      console.error(
+        chalk.red(`Failed to read deliveries. Error: ${error.message}`),
+      );
     }
   }
 };
