@@ -20,14 +20,8 @@ export class AxiosHttpClient extends HttpClient {
     throw new Error("Method not implemented.");
   }
 
-  async delete(url: string): Promise<unknown> {
-    try {
-      await this.client.delete(url);
-
-      return "Succesfully deleted";
-    } catch (error) {
-      throw new Error(`Failed to delete data`);
-    }
+  async delete(url: string): Promise<void> {
+    await this.client.delete(url);
   }
 
   async get<ResponseType>(url: string): Promise<ResponseType> {

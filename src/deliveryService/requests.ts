@@ -1,8 +1,8 @@
 import axios from "axios";
-import { AxiosHttpClient } from "./http-client/axiosHttpClient.js";
-import { DeliveryCreateDto, DeliveryDeleteDto } from "./types/Delivery.js";
-import buildUrl from "./http-client/buildUrl/buildUrl.js";
-import { baseUrl } from "./config/apiPaths/apiPaths.js";
+import { AxiosHttpClient } from "../httpClient/axiosHttpClient.js";
+import { DeliveryCreateDto, DeliveryDeleteDto } from "../types/Delivery.js";
+import buildUrl from "../httpClient/buildUrl/buildUrl.js";
+import { baseUrl } from "../config/apiPaths/apiPaths.js";
 
 const axiosHttpClient = new AxiosHttpClient(axios.create());
 const deliveriesUrl = buildUrl(baseUrl, "/deliveries");
