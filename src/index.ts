@@ -1,3 +1,3 @@
-import { run } from "./cli/prompt.js";
+import { run } from "./cli/run.js";
 
 await run();

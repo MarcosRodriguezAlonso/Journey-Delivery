@@ -14,7 +14,6 @@ export const run = async () => {
   if (answers.action === "Create") {
     const createAnswers = await prompt(createQuestions);
     console.log("Creating delivery...");
-    console.log(createAnswers);
   }
 
   if (answers.action === "Delete") {
@@ -24,12 +23,12 @@ export const run = async () => {
     try {
       await deleteDelivery({
         owner: answers.name,
-        week: answers.Week,
+        week: answers.week,
       });
 
       console.log("Delivery deleted successfully");
     } catch (error) {
-      console.log("Error deleting delivery");
+      console.error(`Failed to delete delivery. Error: ${error.message}`);
     }
   }
 };
