@@ -1,29 +1,23 @@
 import inquirer from "inquirer";
 import {
-  createQuestions,
+  numberOfPartnersQuestion,
   deleteQuestions,
   questions,
 } from "./questions/questions.js";
-import { deleteDelivery } from "../deliveryService/requests.js";
+import { createDelivery, deleteDelivery } from "../deliveryService/requests.js";
+import { DeliveryCreateDto } from "../types/Delivery.js";
 
 export const run = async () => {
   const prompt = inquirer.createPromptModule();
 
   const answers = await prompt(questions);
 
-  if (answers.action === "Create") {
-    const createAnswers = await prompt(createQuestions);
-    console.log("Creating delivery...");
+  if (answers["action"] === "delete" && !answers["confirmDelete"]) {
+    console.log("Delete delivery cancelled");
+    return;
   }
 
-  if (answers.action === "Delete") {
-    const deleteAnswers = await prompt(deleteQuestions);
-
-    if (!deleteAnswers["confirm delete"]) {
-      console.log("Delete delivery cancelled");
-      return;
-    }
-
+  if (answers["confirmDelete"]) {
     console.log("Deleting delivery starts...");
 
     try {
@@ -35,6 +29,37 @@ export const run = async () => {
       console.log("Delivery deleted successfully");
     } catch (error) {
       console.error(`Failed to delete delivery. Error: ${error.message}`);
+    }
+  }
+
+  if (answers["action"] === "create" && !answers["confirmCreate"]) {
+    console.log("Create delivery cancelled");
+    return;
+  }
+
+  if (answers["confirmCreate"]) {
+    const deliverToCreate: DeliveryCreateDto = {
+      owner: answers.name,
+      week: answers.week,
+      hasPartner: answers.numberOfPartners > 1,
+      frontUrls: {
+        gitHub: answers.repoFrontUrl,
+        production: answers.prodFrontUrl,
+      },
+      backUrls: {
+        gitHub: answers.repoBackUrl,
+        production: answers.prodBackUrl,
+      },
+      firstPartnerName: answers.firstPartnerName,
+      secondPartnerName: answers.secondPartnerName,
+      deliveryDate: new Date(),
+    };
+
+    try {
+      await createDelivery(deliverToCreate);
+      console.log("Successfull deliver it...");
+    } catch (error) {
+      console.error(`Failed to create delivery. Error: ${error.message}`);
     }
   }
 };
