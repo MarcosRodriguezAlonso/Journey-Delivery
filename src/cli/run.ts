@@ -55,7 +55,7 @@ export const run = async () => {
 
     try {
       await createDelivery(deliverToCreate);
-      console.log(chalk.bgGreen("Successfull deliver it..."));
+      console.log(chalk.bgGreen("Successfull delivered"));
     } catch (error) {
       console.error(
         chalk.bgRed(`Failed to create delivery. Error: ${error.message}`),
