@@ -49,8 +49,8 @@ export const run = async () => {
       frontRepoUrl: answers.frontRepoUrl,
       backProductionUrl: answers.backProductionUrl,
       backRepoUrl: answers.backRepoUrl,
-      firstTeammateName: answers.firstPartnerName,
-      secondTeammateName: answers.secondPartnerName,
+      firstTeammateName: answers.firstTeammateName,
+      secondTeammateName: answers.secondTeammateName,
     };
 
     try {
