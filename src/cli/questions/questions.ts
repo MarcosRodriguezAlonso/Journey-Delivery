@@ -77,6 +77,18 @@ export const questions: QuestionCollection = [
     when: (answers: { action: Action }) => answers.action === "create",
   },
   {
+    type: "confirm",
+    name: "hasTrello",
+    message: "Does the delivery have a Trello board?",
+    when: (answers: { action: Action }) => answers.action === "create",
+  },
+  {
+    type: "input",
+    name: "trelloUrl",
+    message: "What's the Trello URL?",
+    when: (answers: { hasTrello: boolean }) => answers.hasTrello,
+  },
+  {
     type: "input",
     name: "backRepoUrl",
     message: "What's the repo URL?",

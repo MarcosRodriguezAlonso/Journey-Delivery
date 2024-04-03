@@ -4,6 +4,7 @@ export type Delivery = {
   week: number;
   firstTeammateName?: string;
   secondTeammateName?: string;
+  trelloUrl?: string;
   frontRepoUrl?: string;
   frontProductionUrl?: string;
   backRepoUrl?: string;

@@ -45,6 +45,7 @@ export const run = async () => {
     const deliverToCreate: DeliveryCreateDto = {
       owner: answers.name,
       week: answers.week,
+      trelloUrl: answers.trelloUrl,
       frontProductionUrl: answers.frontProductionUrl,
       frontRepoUrl: answers.frontRepoUrl,
       backProductionUrl: answers.backProductionUrl,
@@ -78,6 +79,12 @@ export const run = async () => {
         }
 
         console.log(chalk.bgBlue(`\n  Owner ${delivery.owner}:`));
+
+        if (delivery.trelloUrl) {
+          console.log(
+            chalk.bold(`    Trello board: `) + `${delivery.trelloUrl}`,
+          );
+        }
 
         if (hasFront) {
           console.log(
